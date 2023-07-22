@@ -121,7 +121,7 @@ const Home = () => {
       <form className={`animeLeft ${styles.formSection}`}>
         <div className={styles.DescContainer}>
           <div className={styles.Img}>
-            <img src="public/BinanceIcon.jpg"></img>
+            <img src="../../public/Binanceicon.jpg"></img>
           </div>
           <div className={styles.DescText}>
             <div>Enter Binance API details</div>
