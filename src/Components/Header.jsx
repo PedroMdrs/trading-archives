@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./Header.module.css";
+import styles from "./Css/Header.module.css";
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 const Header = () => {
   return (
@@ -9,14 +10,9 @@ const Header = () => {
         <Link
           to="/"
           aria-label="Trading Archives - Home"
-          className={`${styles.link}`}
+          className={`${styles.title}`}
         >
-          <div className={`${styles.logo}`}>
-            <p>Trading Archives</p>
-          </div>
-          {/* <div className={`${styles.logo}`}>
-            <Logo />
-          </div> */}
+          <Logo fill={"#fafafa"} />
         </Link>
       </nav>
     </header>

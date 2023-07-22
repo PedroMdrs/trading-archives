@@ -1,18 +1,6 @@
 const pnlLineChartTheme = {
-  color: [
-    "#dd6c66",
-    "#38c55b",
-    "#e69d87",
-    "#8dc1a9",
-    "#ea7e53",
-    "#eedd78",
-    "#73a373",
-    "#73b9bc",
-    "#7289ab",
-    "#91ca8c",
-    "#f49f42",
-  ],
-  backgroundColor: "#222125",
+  color: ["#dd6c66", "#47cc8e"],
+  background: "transparent",
   title: {
     textStyle: {
       color: "#eeeeee",
@@ -43,7 +31,7 @@ const pnlLineChartTheme = {
     },
     splitLine: {
       lineStyle: {
-        color: ["#292929"],
+        color: ["#52525288"],
         type: "dashed",
       },
     },

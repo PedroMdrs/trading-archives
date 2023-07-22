@@ -7,6 +7,14 @@ p {
 }
 
 .container {
+  background-color: #292929;
+  max-width: 1200px;
+  padding: 25px;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+.tooltipContainer {
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 10px;
@@ -34,8 +42,4 @@ p {
 .pnlContainer span {
   font-weight: bold;
   color: rgb(66, 65, 65);
-}
-.teste {
-  background-color: #222125;
-  padding: 25px;
 }

@@ -10,8 +10,9 @@ const ButtonForm = (props) => (
       fontSize: "0.8rem",
       textTransform: "initial",
       padding: "0.3rem 1rem",
-      backgroundColor: "rgb(85, 85, 92) !important",
+      backgroundColor: "#3D3D3D !important",
       boxShadow: "none",
+      color: "#fafafa",
       "&:hover": {
         boxShadow: "none",
         backgroundColor: "#1976d2 !important",

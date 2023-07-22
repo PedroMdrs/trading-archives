@@ -22,68 +22,114 @@ echarts.use([
 
 echarts.registerTheme("pnl_line_chart_theme", pnlLineChartTheme);
 
-const PnlLineChart = ({ agroupedTrades, className }) => {
-  const [isHovered, setIsHovered] = useState(false);
+function formatTime(time) {
+  const date = new Date(time);
+  const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const day = date.getDate();
+  const formattedHour = hour.toString().padStart(2, "0");
+  const formattedMinute = minute.toString().padStart(2, "0");
+  const formattedDate = {
+    weekday,
+    month,
+    year,
+    formattedHour,
+    formattedMinute,
+    day,
+  };
+  return formattedDate;
+}
 
-  let pnlData = [0];
-  agroupedTrades.reduce((sum, { totalPnl }) => {
-    sum += totalPnl;
+function formatDate(time) {
+  if (!time) return;
+  const { day, month, year } = formatTime(time);
+  const yearSimplified = year.toString().slice(-2);
+  return `${day}/${month}/${yearSimplified}`;
+}
+
+function getPeriod(startTime, endTime) {
+  const initialDate = formatDate(startTime);
+  const finalDate = formatDate(endTime);
+
+  const timeDifference = Math.abs(endTime - startTime);
+
+  const days = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+  return `${initialDate} - ${finalDate} (${days === 0 ? "1" : days} ${
+    days >= 1 ? "Days" : "Day"
+  })`;
+}
+
+function formatTooltipContent(params, data) {
+  const value = params[0].value;
+  const index = params[0].dataIndex - 1;
+
+  const symbol = index >= 0 ? data[index].symbol : "";
+  const totalPnl = index >= 0 ? data[index].realizedPnl : "";
+  const timeData = index >= 0 ? data[index].time : "";
+
+  const { day, formattedHour, formattedMinute, month, weekday, year } =
+    formatTime(timeData);
+
+  const timeString = `${weekday}, ${day} ${month} ${year} - ${formattedHour}:${formattedMinute}`;
+
+  const tooltipContent =
+    value !== 0
+      ? `
+        <div class="${styles.tooltipContainer}">
+          <div class="${styles.symbol}">${symbol}</div>
+          <div>${timeString}</div>
+          <div class="${styles.pnlContainer}">
+            <div>
+              <p>Realized PNL</p>
+              <span>${
+                totalPnl > 0
+                  ? `+$${totalPnl.toFixed(2)}`
+                  : `-$${Math.abs(totalPnl.toFixed(2))}`
+              }</span>
+            </div>
+            <div>
+              <p>Total PNL</p>
+              <span>${value < 0 ? "-" : "+"}$${Math.abs(value).toFixed(
+          2
+        )}</span>
+            </div>
+          </div>
+        </div>
+      `
+      : null;
+
+  return tooltipContent;
+}
+
+function PnlLineChart({ data, className }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [startTime, setStartTime] = React.useState(null);
+  const [endTime, setEndTime] = React.useState(null);
+  const pnlData = [0];
+  const timeData = [0];
+  let period = null;
+
+  React.useEffect(() => {
+    setStartTime(JSON.parse(localStorage.getItem("startTime")));
+    setEndTime(JSON.parse(localStorage.getItem("endTime")));
+  }, []);
+
+  data.reduce((sum, { realizedPnl }) => {
+    sum += realizedPnl;
     pnlData.push(sum);
     return sum;
   }, 0);
-  let timeData = [0];
 
-  function formatateTime(time) {
-    const date = new Date(time);
-    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
-    const month = date.toLocaleDateString("en-US", { month: "short" });
-    const year = date.getFullYear();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    const day = date.getDate();
-    const formattedHour = hour.toString().padStart(2, "0");
-    const formattedMinute = minute.toString().padStart(2, "0");
+  if (endTime > Date.now()) setEndTime(Date.now());
 
-    const formattedDate = {
-      weekday,
-      month,
-      year,
-      formattedHour,
-      formattedMinute,
-      day,
-    };
-    return formattedDate;
-  }
+  period = getPeriod(startTime, endTime);
 
-  function formattedPeriod(time) {
-    if (!time) return;
-    const { day, month, year } = formatateTime(time);
-    const yearSimplified = year.toString().slice(-2)
-    return `${day}/${month}/${yearSimplified}`;
-  }
-
-  function getPeriod(startTime, endTime) {
-    const initialDate = formattedPeriod(startTime);
-    const finalDate = formattedPeriod(endTime);
-
-    
-    const difference = Math.abs(endTime - startTime);
-
-    const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
-    return `${initialDate} - ${finalDate} (${days} days)`;
-  }
-  let period = null;
-
-  if (agroupedTrades.length !== 0) {
-    period = getPeriod(
-      agroupedTrades[0].time,
-      agroupedTrades[agroupedTrades.length - 1].time
-    );
-  }
-
-  agroupedTrades.forEach(({ time }) => {
+  data.forEach(({ time }) => {
     const { day, formattedHour, formattedMinute, month, year } =
-      formatateTime(time);
+      formatTime(time);
 
     const timeString = `${day} ${month} ${year} - ${formattedHour}:${formattedMinute}`;
     timeData.push(timeString);
@@ -91,13 +137,11 @@ const PnlLineChart = ({ agroupedTrades, className }) => {
 
   const option = {
     title: {
-      text: [
-        `PNL ($) {b| ${period} }`, // Parte 1 do título entre as chaves "a"
-      ],
+      text: [`PNL ($) {b| ${period ? period : ""} }`],
       textStyle: {
         rich: {
           b: {
-            color: "   #7c7c91",
+            color: "#666666",
             fontSize: "1rem",
           },
         },
@@ -130,51 +174,7 @@ const PnlLineChart = ({ agroupedTrades, className }) => {
     },
     tooltip: {
       formatter: function (params) {
-        const value = params[0].value;
-
-        const symbol =
-          params[0].dataIndex > 0
-            ? agroupedTrades[params[0].dataIndex - 1].symbol
-            : "";
-
-        const totalPnl =
-          params[0].dataIndex > 0
-            ? agroupedTrades[params[0].dataIndex - 1].totalPnl
-            : "";
-
-        const timeData =
-          params[0].dataIndex > 0
-            ? agroupedTrades[params[0].dataIndex - 1].time
-            : "";
-
-        const { day, formattedHour, formattedMinute, month, weekday, year } =
-          formatateTime(timeData);
-
-        const timeString = `${weekday}, ${day} ${month} ${year} - ${formattedHour}:${formattedMinute}`;
-
-        const tooltipContent =
-          value !== 0
-            ? ` <div class="${styles.container}"> 
-             <div class="${styles.symbol}">  ${symbol}  </div> 
-             <div> ${timeString} </div> 
-              <div class="${styles.pnlContainer}">  
-              <div>
-               <p> Realized PNL </p> <span> ${
-                 totalPnl > 0
-                   ? ` +$${totalPnl.toFixed(2)}`
-                   : `-$${Math.abs(totalPnl.toFixed(2))}`
-               } </span> </div>
-               
-              <div> 
-              <p> Total PNL </p> <span>${value < 0 ? "-" : ""}$${Math.abs(
-                value
-              ).toFixed(2)}</span>
-
-              </div>
-              </div>
-               </div>`
-            : null;
-        return tooltipContent;
+        return formatTooltipContent(params, data);
       },
     },
 
@@ -201,7 +201,7 @@ const PnlLineChart = ({ agroupedTrades, className }) => {
       <section
         onMouseOver={() => setIsHovered(true)}
         onMouseOut={() => setIsHovered(false)}
-        className={styles.teste}
+        className={styles.container}
       >
         <ReactEChartsCore
           className={className}
@@ -212,6 +212,6 @@ const PnlLineChart = ({ agroupedTrades, className }) => {
       </section>
     </>
   );
-};
+}
 
 export default PnlLineChart;
