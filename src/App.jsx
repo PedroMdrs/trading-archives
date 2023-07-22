@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Components/Home";
 import TradeData from "./Components/TradeData";
@@ -9,7 +9,7 @@ import "./CalendarCustom.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <UserStorage>
         <Header />
         <Routes>
@@ -20,7 +20,7 @@ const App = () => {
           ></Route>
         </Routes>
       </UserStorage>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
