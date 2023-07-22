@@ -143,7 +143,7 @@ export const UserStorage = ({ children }) => {
       const queryParams = `startTime=${
         startTime + i * week
       }&endTime=${endTime}&timestamp=${timestamp}`;
-      console.log(startTime, endTime);
+
       const signature = HmacSHA256(queryParams, apiSecret).toString(enc.Hex);
 
       const url = `${baseUrl}${endpoint}?${queryParams}&signature=${signature}`;
@@ -165,7 +165,7 @@ export const UserStorage = ({ children }) => {
     
     if (period < 2) {
       const queryParams = `startTime=${startTime}&endTime=${endTime}&timestamp=${timestamp}`;
-      console.log(startTime, endTime);
+      
       const signature = HmacSHA256(queryParams, apiSecret).toString(enc.Hex);
 
       const url = `${baseUrl}${endpoint}?${queryParams}&signature=${signature}`;

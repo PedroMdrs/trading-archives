@@ -1,7 +1,7 @@
 import React from "react";
 
 const Logo = ({ fill }) => {
-  console.log(fill);
+  
   return (
     <svg
       width="203"
