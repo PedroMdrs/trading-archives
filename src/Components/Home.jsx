@@ -15,7 +15,6 @@ const Home = () => {
   const [startTime, setStartTime] = React.useState(null);
   const [endTime, setEndTime] = React.useState(null);
   const [dateError, setDateError] = React.useState(null);
-  const [isReady, setIsReady] = React.useState(false);
 
   const Navigate = useNavigate();
 
@@ -112,7 +111,7 @@ const Home = () => {
       apiSecret &&
       error === false
     ) {
-      Navigate("trade-data");
+      Navigate("/trading-archives/trade-data");
     }
   }, [Navigate, apiSecret, apiKey, startTime, endTime, error]);
 

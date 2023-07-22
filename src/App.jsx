@@ -14,7 +14,10 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/trading-archives/" element={<Home />} />
-          <Route path="trade-data" element={<TradeData />}></Route>
+          <Route
+            path="/trading-archives/trade-data"
+            element={<TradeData />}
+          ></Route>
         </Routes>
       </UserStorage>
     </BrowserRouter>
