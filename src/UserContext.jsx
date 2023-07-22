@@ -162,10 +162,10 @@ export const UserStorage = ({ children }) => {
         });
       i++;
     }
-    
+
     if (period < 2) {
       const queryParams = `startTime=${startTime}&endTime=${endTime}&timestamp=${timestamp}`;
-      
+
       const signature = HmacSHA256(queryParams, apiSecret).toString(enc.Hex);
 
       const url = `${baseUrl}${endpoint}?${queryParams}&signature=${signature}`;
