@@ -111,7 +111,7 @@ const Home = () => {
       apiSecret &&
       error === false
     ) {
-      Navigate("/trading-archives/trade-data");
+      Navigate("/trade-data");
     }
   }, [Navigate, apiSecret, apiKey, startTime, endTime, error]);
 

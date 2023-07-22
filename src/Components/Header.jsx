@@ -8,7 +8,7 @@ const Header = () => {
     <header>
       <nav className={`${styles.nav}`}>
         <Link
-          to="/trading-archives/"
+          to="/"
           aria-label="Trading Archives - Home"
           className={`${styles.title}`}
         >
