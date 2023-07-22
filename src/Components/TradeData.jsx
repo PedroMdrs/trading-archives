@@ -1,5 +1,5 @@
 import React from "react";
-import PnlLineChart from "../PnlLineChart";
+import PnlLineChart from "./PnlLineChart";
 import { UserContext } from "../UserContext";
 import styles from "./Css/TradeData.module.css";
 import Loading from "./Helper/Loading";
@@ -7,10 +7,9 @@ import Loading from "./Helper/Loading";
 const TradeData = () => {
   const { agroupedTrades, loading } = React.useContext(UserContext);
   const [localTrades, setLocalTrades] = React.useState([]);
-
   React.useEffect(() => {
     setLocalTrades(JSON.parse(localStorage.getItem("trades")));
-  }, []);
+  }, [agroupedTrades]);
 
   return (
     <>

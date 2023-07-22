@@ -15,6 +15,8 @@ const Home = () => {
   const [startTime, setStartTime] = React.useState(null);
   const [endTime, setEndTime] = React.useState(null);
   const [dateError, setDateError] = React.useState(null);
+  const [isReady, setIsReady] = React.useState(false);
+
   const Navigate = useNavigate();
 
   const {
@@ -103,8 +105,16 @@ const Home = () => {
   }, [setError, setLoading]);
 
   React.useEffect(() => {
-    if (error === false) Navigate("trade-data");
-  }, [error, Navigate]);
+    if (
+      startTime !== null &&
+      endTime !== null &&
+      apiKey &&
+      apiSecret &&
+      error === false
+    ) {
+      Navigate("trade-data");
+    }
+  }, [Navigate, apiSecret, apiKey, startTime, endTime, error]);
 
   return (
     <div className={styles.container}>
