@@ -1,0 +1,46 @@
+.formContainer {
+  width: 100%;
+  min-width: 200px;
+  max-width: 500px;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  background-color: rgb(46, 46, 48);
+}
+.desc {
+  font-size: 1rem;
+}
+.button {
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  margin-right: 0px;
+  font-size: 1rem;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+.link {
+  border-bottom: 1px solid rgb(119, 126, 144) transparent;
+  display: inline-block;
+  color: #247fff !important;
+}
+
+.link:hover {
+  border-bottom: 1px solid rgb(119, 126, 144);
+  line-height: 17px;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgb(36, 127, 255);
+}

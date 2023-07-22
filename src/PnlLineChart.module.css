@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+p {
+  display: inline;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  color: rgb(73, 80, 85);
+}
+
+.symbol {
+  font-weight: bold;
+}
+.pnlContainer {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pnlContainer > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.pnlContainer > div > p {
+  font-weight: lighter;
+  color: rgb(73, 80, 85);
+}
+.pnlContainer span {
+  font-weight: bold;
+  color: rgb(66, 65, 65);
+}
+.teste {
+  background-color: #222125;
+  padding: 25px;
+}
