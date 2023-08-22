@@ -125,7 +125,6 @@ const Home = () => {
           <div className={styles.DescText}>
             <div>Enter Binance API details</div>
             <span>*You only need to enable read-only</span> <br />
-            <span>*Select a minimum of 2 days</span>
           </div>
         </div>
         <TextFieldCustom
