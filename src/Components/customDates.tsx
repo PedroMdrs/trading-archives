@@ -1,5 +1,9 @@
 import { endOfDay, isSameDay, startOfYear } from "date-fns";
 
+interface Irange {
+  startDate: Date;
+  endDate: Date;
+}
 const customDates = [
   {
     label: "This Year",
@@ -7,7 +11,7 @@ const customDates = [
       startDate: startOfYear(new Date()),
       endDate: endOfDay(new Date()),
     }),
-    isSelected(range) {
+    isSelected(range: Irange) {
       const definedRange = this.range();
       return (
         isSameDay(range.startDate, definedRange.startDate) &&
@@ -21,7 +25,7 @@ const customDates = [
       startDate: startOfYear(new Date(2016, 0, 1)),
       endDate: endOfDay(new Date()),
     }),
-    isSelected(range) {
+    isSelected(range: Irange) {
       const definedRange = this.range();
       return (
         isSameDay(range.startDate, definedRange.startDate) &&

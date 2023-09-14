@@ -11,6 +11,7 @@ import {
 import { CanvasRenderer } from "echarts/renderers";
 import pnlLineChartTheme from "./pnlLineChartTheme";
 import styles from "./PnlLineChart.module.css";
+import { IAgroupedTrade } from "../UserContext";
 echarts.use([
   TitleComponent,
   GridComponent,
@@ -22,7 +23,7 @@ echarts.use([
 
 echarts.registerTheme("pnl_line_chart_theme", pnlLineChartTheme);
 
-function formatTime(time: number) {
+function formatTime(time: number | string) {
   const date = new Date(time);
   const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
   const month = date.toLocaleDateString("en-US", { month: "short" });
@@ -62,12 +63,15 @@ function getPeriod(startTime: number, endTime: number) {
   })`;
 }
 
-function formatTooltipContent(params, data) {
+function formatTooltipContent(
+  params: { value: number; dataIndex: number }[],
+  data: IAgroupedTrade
+) {
   const value = params[0].value;
   const index = params[0].dataIndex - 1;
 
   const symbol = index >= 0 ? data[index].symbol : "";
-  const totalPnl = index >= 0 ? data[index].realizedPnl : "";
+  const totalPnl = index >= 0 ? data[index].realizedPnl : 0;
   const timeData = index >= 0 ? data[index].time : "";
 
   const { day, formattedHour, formattedMinute, month, weekday, year } =
@@ -104,17 +108,25 @@ function formatTooltipContent(params, data) {
   return tooltipContent;
 }
 
-function PnlLineChart({ data, className }) {
+function PnlLineChart({
+  data,
+  className,
+}: {
+  data: IAgroupedTrade;
+  className: string;
+}) {
+  console.log(data);
+  console.log(className);
   const [isHovered, setIsHovered] = useState(false);
-  const [startTime, setStartTime] = React.useState(null);
-  const [endTime, setEndTime] = React.useState(null);
+  const [startTime, setStartTime] = React.useState<null | number>(null);
+  const [endTime, setEndTime] = React.useState<null | number>(null);
   const pnlData = [0];
-  const timeData = [0];
+  const timeData: number[] | (number & string[]) = [0];
   let period = null;
 
   React.useEffect(() => {
-    setStartTime(JSON.parse(localStorage.getItem("startTime")));
-    setEndTime(JSON.parse(localStorage.getItem("endTime")));
+    setStartTime(JSON.parse(localStorage.getItem("startTime") || ""));
+    setEndTime(JSON.parse(localStorage.getItem("endTime") || ""));
   }, []);
 
   data.reduce((sum, { realizedPnl }) => {
@@ -123,9 +135,9 @@ function PnlLineChart({ data, className }) {
     return sum;
   }, 0);
 
-  if (endTime > Date.now()) setEndTime(Date.now());
+  if (endTime && endTime > Date.now()) setEndTime(Date.now());
 
-  period = getPeriod(startTime, endTime);
+  if (startTime && endTime) period = getPeriod(startTime, endTime);
 
   data.forEach(({ time }) => {
     const { day, formattedHour, formattedMinute, month, year } =
@@ -173,7 +185,13 @@ function PnlLineChart({ data, className }) {
       axisPointer: { lineStyle: { color: "#7e7c7c" } },
     },
     tooltip: {
-      formatter: function (params) {
+      formatter: function (
+        params: {
+          value: number;
+          dataIndex: number;
+        }[]
+      ) {
+        console.log(params);
         return formatTooltipContent(params, data);
       },
     },

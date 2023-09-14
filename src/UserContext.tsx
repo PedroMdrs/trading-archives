@@ -32,7 +32,7 @@ type IRawTrade = Omit<ITrade, "commission" | "realizedPnl" | "qty"> & {
   qty: string;
 };
 
-type IAgroupedTrade = ITrade[];
+export type IAgroupedTrade = ITrade[];
 
 interface IUserContext {
   apiKey: string | null;
