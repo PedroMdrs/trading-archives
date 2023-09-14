@@ -93,7 +93,7 @@ const Home = () => {
     }
   }
 
-  function validate(value: string, type?: string) {
+  function validate(value: string, type: "secret" | "key") {
     if (!type) return true;
     if (types[type] && !types[type].regex.test(value)) {
       type === "key" ? setKeyError(true) : setSecretError(true);
