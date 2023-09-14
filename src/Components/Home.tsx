@@ -10,11 +10,20 @@ import { DateRangePicker, defaultStaticRanges } from "react-date-range";
 import customDates from "./customDates";
 
 const Home = () => {
-  const [keyError, setKeyError] = React.useState(null);
-  const [secretError, setSecretError] = React.useState(null);
-  const [startTime, setStartTime] = React.useState(null);
-  const [endTime, setEndTime] = React.useState(null);
-  const [dateError, setDateError] = React.useState(null);
+  const [keyError, setKeyError] = React.useState<null | boolean>(null);
+  const [secretError, setSecretError] = React.useState<null | boolean>(null);
+  const [startTime, setStartTime] = React.useState<number | null>(null);
+  const [endTime, setEndTime] = React.useState<number | null>(null);
+  const [dateError, setDateError] = React.useState<boolean | null>(null);
+  const [selectedRange, setSelectedRange] = React.useState<{
+    startDate: Date;
+    endDate: Date;
+    key: string;
+  }>({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  });
 
   const Navigate = useNavigate();
 
@@ -30,11 +39,6 @@ const Home = () => {
     setLoading,
   } = React.useContext(UserContext);
 
-  const [selectedRange, setSelectedRange] = React.useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
   const types = {
     secret: {
       regex: /^.{12,}$/,
@@ -45,7 +49,7 @@ const Home = () => {
   };
 
   function handleDateRangeChange(item: {
-    selection: { startDate: Date; endDate: Date };
+    selection: { startDate: Date; endDate: Date; key: string };
   }) {
     const startTimestamp = item.selection.startDate.getTime();
     const endTimestamp = item.selection.endDate.getTime();
@@ -69,7 +73,7 @@ const Home = () => {
     setSelectedRange(item.selection);
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     const isKeyValid = validate(apiKey, "key");
     const isSecretValid = validate(apiSecret, "secret");
@@ -89,8 +93,8 @@ const Home = () => {
     }
   }
 
-  function validate(value, type) {
-    if (type === false) return true;
+  function validate(value: string, type?: string) {
+    if (!type) return true;
     if (types[type] && !types[type].regex.test(value)) {
       type === "key" ? setKeyError(true) : setSecretError(true);
       return false;
@@ -133,7 +137,7 @@ const Home = () => {
           id="apiKey"
           label="API Key"
           error={keyError}
-          onChange={({ target }) => {
+          onChange={({ target }: { target: HTMLInputElement }) => {
             setApiKey(target.value);
             if (target.value.length >= 6) setKeyError(false);
             setError(null);
@@ -144,7 +148,7 @@ const Home = () => {
           id="secretKey"
           label="Secret Key"
           error={secretError}
-          onChange={({ target }) => {
+          onChange={({ target }: { target: HTMLInputElement }) => {
             setApiSecret(target.value);
             if (target.value.length >= 12) setSecretError(false);
             setError(null);
@@ -158,7 +162,7 @@ const Home = () => {
             </ButtonForm>
           ) : (
             <ButtonForm
-              onClick={(e) => {
+              onClick={(e: SubmitEvent) => {
                 handleSubmit(e);
               }}
             >
