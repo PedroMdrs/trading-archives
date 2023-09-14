@@ -91,7 +91,7 @@ function formatTooltipContent(
               <span>${
                 totalPnl > 0
                   ? `+$${totalPnl.toFixed(2)}`
-                  : `-$${Math.abs(totalPnl.toFixed(2))}`
+                  : `-$${Math.abs(Number(totalPnl.toFixed(2)))}`
               }</span>
             </div>
             <div>
