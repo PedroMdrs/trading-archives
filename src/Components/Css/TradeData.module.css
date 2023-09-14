@@ -1,0 +1,8 @@
+.loading {
+  text-align: center;
+  margin-top: 3rem;
+}
+.chart {
+  max-width: 100%;
+  min-height: 60vh !important;
+}

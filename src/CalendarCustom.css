@@ -1,0 +1,127 @@
+.rdrCalendarWrapper,
+.rdrDefinedRangesWrapper,
+.rdrDateDisplayWrapper,
+.rdrStaticRange.rdrStaticRange {
+  background-color: #292929;
+  color: #b8b8b8;
+}
+.rdrDateRangePickerWrapper {
+  border-radius: 0.5rem;
+}
+.rdrMonthAndYearPickers {
+  color: #f0f0f0;
+}
+.rdrDayDisabled {
+  background-color: #1c1c1c;
+}
+.rdrDayDisabled .rdrDayNumber span {
+  color: #fafafa;
+}
+.rdrInputRanges {
+  display: none;
+}
+.rdrDay span {
+  color: #b8b8b8;
+}
+.rdrDayDisabled .rdrDayNumber span {
+  color: #7a7a7a;
+}
+.rdrDayPassive .rdrDayNumber span {
+  color: #7a7a7a;
+}
+.rdrStaticRange {
+  border: none;
+}
+.rdrMonth {
+  max-width: 100%;
+}
+.rdrMonthsVertical {
+  flex-direction: row;
+}
+.rdrNextPrevButton,
+.rdrPprevButton {
+  background-color: #525252;
+}
+.rdrNextPrevButton:hover,
+.rdrPprevButton:hover {
+  background: #666666;
+}
+.rdrNextButton i {
+  border-color: transparent transparent transparent #fafafa !important;
+}
+.rdrPprevButton i {
+  border-color: transparent #fafafa transparent transparent !important;
+}
+.rdrStaticRange:hover .rdrStaticRangeLabel,
+.rdrStaticRange:focus .rdrStaticRangeLabel {
+  background-color: #525252 !important;
+  color: #fafafa !important;
+  font-weight: 400 !important;
+}
+.rdrStaticRange.rdrStaticRangeSelected {
+  background: #525252;
+  color: #fafafa !important;
+  font-weight: 400 !important;
+}
+.rdrDateInput {
+  background-color: transparent;
+}
+.rdrDefinedRangesWrapper {
+  width: 100%;
+  border-color: #323336;
+}
+.rdrDayDisabled .rdrInRange,
+.rdrDayDisabled .rdrStartEdge,
+.rdrDayDisabled .rdrEndEdge,
+.rdrDayDisabled .rdrSelected,
+.rdrDayDisabled .rdrDayStartPreview,
+.rdrDayDisabled .rdrDayInPreview,
+.rdrDayDisabled .rdrDayEndPreview {
+  filter: grayscale(100%) opacity(20%);
+}
+.rdrStartEdge {
+  background-color: rgb(29, 104, 202);
+}
+.rdrEndEdge {
+  background-color: rgb(29, 104, 202);
+}
+.rdrCalendarWrapper {
+  width: 100%;
+}
+@media (max-width: 1240px) {
+  .rdrDateRangePickerWrapper,
+  .rdrCalendarWrapper,
+  .rdrDateDisplayWrapper {
+    max-width: 100%;
+  }
+}
+@media (max-width: 800px) {
+  .rdrDefinedRangesWrapper {
+    border: none;
+  }
+  .rdrMonthsVertical {
+    flex-direction: column;
+  }
+}
+@keyframes animeLeft {
+  to {
+    opacity: 1;
+    transform: initial;
+  }
+}
+@media (max-width: 470px) {
+  .rdrDateRangePickerWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .rdrStaticRanges {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom: 1px solid #323336;
+  }
+  .rdrMonth {
+    width: 100%;
+  }
+}

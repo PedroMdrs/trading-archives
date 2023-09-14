@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 10rem;
+}
+
+.formSection {
+  width: 100%;
+  min-width: 200px;
+  max-width: 800px;
+  padding: 3rem;
+  background-color: #292929;
+}
+.DescContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  gap: 15px;
+  font-size: 1.5rem;
+}
+
+.Img {
+  position: relative;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.Img img {
+  border-radius: 0.5rem;
+}
+
+.DescText > {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffff;
+}
+.DescText > span {
+  color: #666666;
+  font-size: 1rem;
+}
+.buttonContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+.dataPicker {
+  max-width: 100%;
+}
+@media (max-width: 1240px) {
+  .container {
+    flex-wrap: wrap;
+  }
+}
