@@ -121,7 +121,7 @@ function PnlLineChart({
   const [startTime, setStartTime] = React.useState<null | number>(null);
   const [endTime, setEndTime] = React.useState<null | number>(null);
   const pnlData = [0];
-  const timeData: number[] | (number & string[]) = [0];
+  const timeData: (number | string)[] = [0];
   let period = null;
 
   React.useEffect(() => {
