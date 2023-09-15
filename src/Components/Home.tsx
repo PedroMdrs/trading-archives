@@ -6,7 +6,12 @@ import TextFieldCustom from "./Forms/TextFieldCustom";
 import { useNavigate } from "react-router-dom";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { DateRangePicker, defaultStaticRanges } from "react-date-range";
+import {
+  DateRangePicker,
+  Range,
+  RangeKeyDict,
+  defaultStaticRanges,
+} from "react-date-range";
 import customDates from "./customDates";
 
 const Home = () => {
@@ -15,15 +20,7 @@ const Home = () => {
   const [startTime, setStartTime] = React.useState<number | null>(null);
   const [endTime, setEndTime] = React.useState<number | null>(null);
   const [dateError, setDateError] = React.useState<boolean | null>(null);
-  const [selectedRange, setSelectedRange] = React.useState<{
-    startDate: Date;
-    endDate: Date;
-    key: string;
-  }>({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
+  const [selectedRange, setSelectedRange] = React.useState<Range>({});
 
   const Navigate = useNavigate();
 
@@ -48,19 +45,19 @@ const Home = () => {
     },
   };
 
-  function handleDateRangeChange(item: {
-    selection: { startDate: Date; endDate: Date; key: string };
-  }) {
-    const startTimestamp = item.selection.startDate.getTime();
-    const endTimestamp = item.selection.endDate.getTime();
+  function handleDateRangeChange(item: RangeKeyDict) {
+    console.log(item);
+    if (!item.range1.startDate || !item.range1.endDate) return;
+    const startTimestamp = item.range1.startDate.getTime();
+    const endTimestamp = item.range1.endDate.getTime();
     if (startTimestamp && endTimestamp) setDateError(false);
     if (
-      item.selection.endDate.toDateString() ===
-      item.selection.startDate.toDateString()
+      item.range1.endDate.toDateString() ===
+      item.range1.startDate.toDateString()
     ) {
-      const startOfDay = new Date(item.selection.startDate);
+      const startOfDay = new Date(item.range1.startDate);
       startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(item.selection.startDate);
+      const endOfDay = new Date(item.range1.startDate);
       endOfDay.setHours(23, 59, 59, 999);
 
       setStartTime(startOfDay.getTime());
@@ -70,7 +67,7 @@ const Home = () => {
       setEndTime(endTimestamp);
     }
 
-    setSelectedRange(item.selection);
+    setSelectedRange(item.range1);
   }
 
   async function handleSubmit(e: SubmitEvent) {

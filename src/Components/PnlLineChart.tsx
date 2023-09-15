@@ -115,8 +115,6 @@ function PnlLineChart({
   data: IAgroupedTrade;
   className: string;
 }) {
-  console.log(data);
-  console.log(className);
   const [isHovered, setIsHovered] = useState(false);
   const [startTime, setStartTime] = React.useState<null | number>(null);
   const [endTime, setEndTime] = React.useState<null | number>(null);
@@ -191,7 +189,6 @@ function PnlLineChart({
           dataIndex: number;
         }[]
       ) {
-        console.log(params);
         return formatTooltipContent(params, data);
       },
     },

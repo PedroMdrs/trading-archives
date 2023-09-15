@@ -1,7 +1,6 @@
 import React from "react";
 
-const Logo = ({ fill }) => {
-  
+const Logo = ({ fill }: { fill: string }) => {
   return (
     <svg
       width="203"
