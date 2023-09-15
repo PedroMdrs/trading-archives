@@ -35,10 +35,10 @@ type IRawTrade = Omit<ITrade, "commission" | "realizedPnl" | "qty"> & {
 export type IAgroupedTrade = ITrade[];
 
 interface IUserContext {
-  apiKey: string | null;
-  setApiKey: React.Dispatch<React.SetStateAction<string | null>>;
-  apiSecret: string | null;
-  setApiSecret: React.Dispatch<React.SetStateAction<string | null>>;
+  apiKey: string;
+  setApiKey: React.Dispatch<React.SetStateAction<string>>;
+  apiSecret: string;
+  setApiSecret: React.Dispatch<React.SetStateAction<string>>;
   agroupedTrades: IAgroupedTrade;
   setAgroupedTrades: React.Dispatch<React.SetStateAction<IAgroupedTrade | []>>;
   trades: IRawTrade[];
@@ -71,8 +71,8 @@ const IUserContextState = {
 export const UserContext = React.createContext<IUserContext>(IUserContextState);
 
 export const UserStorage = ({ children }: React.PropsWithChildren) => {
-  const [apiKey, setApiKey] = React.useState<null | string>(null);
-  const [apiSecret, setApiSecret] = React.useState<null | string>(null);
+  const [apiKey, setApiKey] = React.useState<string>("");
+  const [apiSecret, setApiSecret] = React.useState<string>("");
   const [agroupedTrades, setAgroupedTrades] = React.useState<
     [] | IAgroupedTrade
   >([]);
