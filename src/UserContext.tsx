@@ -49,7 +49,26 @@ interface IUserContext {
   getFuturesTrades: IGetFuturesTrades;
 }
 
-export const UserContext = React.createContext<null | IUserContext>(null);
+const IUserContextState = {
+  setApiKey: () => {},
+  setApiSecret: () => {},
+  apiKey: "",
+  apiSecret: "",
+  agroupedTrades: [],
+  setAgroupedTrades: () => {},
+  error: null,
+  loading: false,
+  trades: [],
+  setError: () => {},
+  setLoading: () => {},
+  getFuturesTrades: async (
+    apiKey: string,
+    apiSecret: string,
+    startTime: number,
+    endTime: number
+  ) => {},
+};
+export const UserContext = React.createContext<IUserContext>(IUserContextState);
 
 export const UserStorage = ({ children }: React.PropsWithChildren) => {
   const [apiKey, setApiKey] = React.useState<null | string>(null);
