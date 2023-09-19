@@ -20,7 +20,10 @@ const Home = () => {
   const [startTime, setStartTime] = React.useState<number | null>(null);
   const [endTime, setEndTime] = React.useState<number | null>(null);
   const [dateError, setDateError] = React.useState<boolean | null>(null);
-  const [selectedRange, setSelectedRange] = React.useState<Range>({});
+  const [selectedRange, setSelectedRange] = React.useState<Range>({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   const Navigate = useNavigate();
 
@@ -46,7 +49,6 @@ const Home = () => {
   };
 
   function handleDateRangeChange(item: RangeKeyDict) {
-    console.log(item);
     if (!item.range1.startDate || !item.range1.endDate) return;
     const startTimestamp = item.range1.startDate.getTime();
     const endTimestamp = item.range1.endDate.getTime();
