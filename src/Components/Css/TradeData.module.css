@@ -2,7 +2,21 @@
   text-align: center;
   margin-top: 3rem;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  gap: 2rem;
+  max-width: 1440px;
+  margin: 5rem auto;
+}
 .chart {
-  max-width: 100%;
+  width: 100%;
   min-height: 60vh !important;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 2rem;
 }

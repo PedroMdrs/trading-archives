@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--color-2);
+  width: fit-content;
+  padding: 1rem 2rem;
+}
+.winrate {
+  color: var(--color-3);
+}
+
+.stats > span:nth-child(2) > span:nth-child(1) {
+  color: var(--color-5);
+}
+.stats > span:nth-child(2) > span:nth-child(2) {
+  color: var(--color-3);
+}
+.stats > span:nth-child(2) > span:nth-child(3) {
+  color: var(--color-6);
+}

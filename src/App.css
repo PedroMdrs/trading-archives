@@ -1,6 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap");
+
+html {
+  --color-1: #141414;
+  --color-2: #292929;
+  --color-3: #888888;
+  --color-4: #fafafa;
+  --color-5: #47cc8e;
+  --color-6: #dd6c66;
+}
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -9,8 +20,8 @@ body {
   margin: 0px;
   --type-first: Manrope, Arial, sans-serif;
   font-family: var(--type-first);
-  background-color: #141414;
-  color: #fafafa;
+  background-color: var(--color-1);
+  color: var(--color-4);
 }
 
 h1,
@@ -47,4 +58,9 @@ input {
   opacity: 0;
   transform: translateX(-20px);
   animation: animeLeft 0.3s forwards;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }

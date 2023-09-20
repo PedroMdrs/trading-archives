@@ -1,17 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-}
 p {
   display: inline;
 }
 
 .container {
   background-color: #292929;
-  max-width: 1200px;
   padding: 25px;
-  margin: auto;
-  margin-top: 5rem;
 }
 
 .tooltipContainer {

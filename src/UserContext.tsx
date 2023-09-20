@@ -9,7 +9,7 @@ type IGetFuturesTrades = (
   endTime: number
 ) => Promise<void>;
 
-interface ITrade {
+export interface ITrade {
   buyer: boolean;
   commission: number;
   commissionAsset: string;
