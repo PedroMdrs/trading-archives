@@ -82,7 +82,6 @@ export const UserStorage = ({ children }: React.PropsWithChildren) => {
 
   React.useEffect(() => {
     function processTradeData(tradesData: IRawTrade[]) {
-      console.log(tradesData);
       let organizedTrades = tradesData.reduce((acc: ITrade[], trade) => {
         const orderId = trade.orderId;
         const tradeCommission = Number(trade.commission);
@@ -179,7 +178,6 @@ export const UserStorage = ({ children }: React.PropsWithChildren) => {
       }, {});
 
       setAgroupedTrades(processedTrades);
-      console.log(processedTrades);
       localStorage.setItem("trades", JSON.stringify(processedTrades));
     }
     if (error === false) processTradeData(trades);
