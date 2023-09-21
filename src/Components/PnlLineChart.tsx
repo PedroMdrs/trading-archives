@@ -151,7 +151,7 @@ function PnlLineChart({
       textStyle: {
         rich: {
           b: {
-            color: "#666666",
+            color: "#888888",
             fontSize: "1rem",
           },
         },
