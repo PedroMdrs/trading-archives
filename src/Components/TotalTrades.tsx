@@ -1,15 +1,9 @@
-import React, { PropsWithChildren } from "react";
 import StatsCard from "./StatsCard";
-import { ITrade } from "../UserContext";
+import { useTrades } from "../UserContext";
 import styles from "./Css/TotalTrades.module.css";
 const TotalTrades = () => {
-  const [localTrades, setLocalTrades] = React.useState<ITrade[] | []>([]);
-  const winTrades = localTrades.filter((trade) => trade.realizedPnl > 0);
-  const loserTrades = localTrades.filter((trade) => trade.realizedPnl < 0);
+  const { localTrades, winTrades, loserTrades } = useTrades();
 
-  React.useEffect(() => {
-    setLocalTrades(JSON.parse(localStorage.getItem("trades") || ""));
-  }, []);
   return (
     <StatsCard>
       <div className={styles.totalTrades}>Total Trades</div>

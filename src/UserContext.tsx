@@ -47,6 +47,11 @@ interface IUserContext {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   getFuturesTrades: IGetFuturesTrades;
+  winTrades: ITrade[];
+  loserTrades: ITrade[];
+  winRate: string;
+  localTrades: [] | ITrade[];
+  setLocalTrades: React.Dispatch<React.SetStateAction<[] | ITrade[]>>;
 }
 
 const IUserContextState = {
@@ -67,6 +72,11 @@ const IUserContextState = {
     startTime: number,
     endTime: number
   ) => {},
+  winTrades: [],
+  loserTrades: [],
+  winRate: "",
+  localTrades: [],
+  setLocalTrades: () => {},
 };
 export const UserContext = React.createContext<IUserContext>(IUserContextState);
 
@@ -79,6 +89,21 @@ export const UserStorage = ({ children }: React.PropsWithChildren) => {
   const [trades, setTrades] = React.useState<[] | IRawTrade[]>([]);
   const [error, setError] = React.useState<boolean | null>(null);
   const [loading, setLoading] = React.useState(false);
+  const [localTrades, setLocalTrades] = React.useState<[] | ITrade[]>([]);
+  React.useEffect(() => {
+    setLocalTrades(JSON.parse(localStorage.getItem("trades") || ""));
+  }, [agroupedTrades]);
+
+  const winTrades =
+    localTrades && localTrades.length !== 0
+      ? localTrades.filter((trade) => trade.realizedPnl > 0)
+      : agroupedTrades.filter((trade) => trade.realizedPnl > 0);
+  const loserTrades =
+    localTrades && localTrades.length !== 0
+      ? localTrades.filter((trade) => trade.realizedPnl < 0)
+      : agroupedTrades.filter((trade) => trade.realizedPnl < 0);
+
+  const winRate = ((winTrades.length * 100) / localTrades.length).toFixed(2);
 
   React.useEffect(() => {
     function processTradeData(tradesData: IRawTrade[]) {
@@ -279,6 +304,11 @@ export const UserStorage = ({ children }: React.PropsWithChildren) => {
         trades,
         setError,
         setLoading,
+        winTrades,
+        loserTrades,
+        winRate,
+        localTrades,
+        setLocalTrades,
       }}
     >
       {children}

@@ -1,16 +1,9 @@
-import { ITrade } from "../UserContext";
+import { useTrades } from "../UserContext";
 import styles from "./Css/Winrate.module.css";
-import React from "react";
 import StatsCard from "./StatsCard";
 
 const Winrate = () => {
-  const [localTrades, setLocalTrades] = React.useState<ITrade[] | []>([]);
-  const winTrades = localTrades.filter((trade) => trade.realizedPnl > 0);
-  const loserTrades = localTrades.filter((trade) => trade.realizedPnl < 0);
-  const winRate = ((winTrades.length * 100) / localTrades.length).toFixed(2);
-  React.useEffect(() => {
-    setLocalTrades(JSON.parse(localStorage.getItem("trades") || ""));
-  }, []);
+  const { winRate, winTrades, loserTrades } = useTrades();
 
   return (
     <StatsCard>
