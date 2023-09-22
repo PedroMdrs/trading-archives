@@ -11,7 +11,7 @@ const TradeData = () => {
   const [localTrades, setLocalTrades] = React.useState([]);
   React.useEffect(() => {
     setLocalTrades(JSON.parse(localStorage.getItem("trades") || ""));
-  }, []);
+  }, [agroupedTrades]);
 
   return (
     <>
