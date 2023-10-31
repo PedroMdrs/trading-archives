@@ -91,7 +91,8 @@ export const UserStorage = ({ children }: React.PropsWithChildren) => {
   const [loading, setLoading] = React.useState(false);
   const [localTrades, setLocalTrades] = React.useState<[] | ITrade[]>([]);
   React.useEffect(() => {
-    setLocalTrades(JSON.parse(localStorage.getItem("trades") || ""));
+    const localTrades = localStorage.getItem("trades");
+    if (localTrades) setLocalTrades(JSON.parse(localTrades));
   }, [agroupedTrades]);
 
   const winTrades =
